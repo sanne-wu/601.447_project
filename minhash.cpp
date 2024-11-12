@@ -85,7 +85,7 @@ unordered_set<string> make_kmer_set(const string& s, size_t k) {
 }
 
 void make_similarity_matrix(const string& filename, size_t kmer_size, hash<string> my_hash, size_t k, ostream& out) {
-    out << "Source: " << filename << endl;
+    // out << "Source: " << filename << endl;
     ifstream file_list;
     file_list.open(filename);
     string file;
@@ -118,13 +118,15 @@ void make_similarity_matrix(const string& filename, size_t kmer_size, hash<strin
             }
         }
     }
+    out << "##NAMES";
     for (size_t i = 0; i < n; i++) {
-        out << i << " " << names[i] << endl;
+        out << "\t" << names[i];
     }
-
+    out << endl;
     for (size_t i = 0; i < n; i++) {
+        out << names[i];
         for (size_t j = 0; j < n; j++) {
-            out << setw(7) << similarity_matrix[i][j];
+            out << "\t" << similarity_matrix[i][j];
         }
         out << endl;
     }
