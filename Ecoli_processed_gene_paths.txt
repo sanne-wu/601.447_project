@@ -1,9 +1,9 @@
-Ecoli_processed/536_gene.txt
-Ecoli_processed/APECO1_gene.txt
-Ecoli_processed/CFT073_gene.txt
-Ecoli_processed/ED1a_gene.txt
-Ecoli_processed/E234869_gene.txt
-Ecoli_processed/IAI39_gene.txt
-Ecoli_processed/S88_gene.txt
-Ecoli_processed/SMS35_gene.txt
-Ecoli_processed/UTI89_gene.txt
+Ecoli_processed/536_gene.txt 536_gene
+Ecoli_processed/APECO1_gene.txt APEC01_gene
+Ecoli_processed/CFT073_gene.txt CFT073_gene
+Ecoli_processed/ED1a_gene.txt ED1a_gene
+Ecoli_processed/E234869_gene.txt E234869_gene
+Ecoli_processed/IAI39_gene.txt IAI39_gene
+Ecoli_processed/S88_gene.txt S88_gene
+Ecoli_processed/SMS35_gene.txt SMS35_gene
+Ecoli_processed/UTI89_gene.txt UTI89_gene
