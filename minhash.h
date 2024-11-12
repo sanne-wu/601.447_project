@@ -22,6 +22,7 @@ using std::vector;
 using std::unordered_map;
 using std::cout;
 using std::endl;
+using std::setw;
 
 unordered_set<string> bottom_k_sketch(const unordered_set<string>& kmers, hash<string> my_hash,  size_t k);
 
