@@ -15,7 +15,7 @@ def parse_gtf(gtf_file, feature):
         features.append((chr, start, end, strand))
   return features
 
-def load_genome(fna_file):
+def load_genome(fna_file, prokaryotes):
     genome = {} #genome as a dict
     chr_num = ""
     seq = []
@@ -24,8 +24,8 @@ def load_genome(fna_file):
       for line in f:
         if line.startswith(">"):
           if chr_num:
-              genome[chr_num] = "".join(seq)
-          chr_num = line.split()[0][1:].split("_")[0] 
+            genome[chr_num] = "".join(seq)
+          chr_num = line.split()[0][1:].split(" ")[0] if prokaryotes else line.split()[0][1:].split("_")[0]
           seq = []
         else:
           seq.append(line.strip())
@@ -39,8 +39,6 @@ def reverse_complement(seq):
 
 def extract_and_write_features(genome, features, output_file):
     with open(output_file, 'w') as f:
-      f.write(f">{output_file}_concatenated_features\n")
-        
       for chr, start, end, strand in features:
         if chr in genome:
           seq = genome[chr][start-1:end] #adjust for 1-based indexing
@@ -48,25 +46,21 @@ def extract_and_write_features(genome, features, output_file):
             seq = reverse_complement(seq)
           f.write(seq)
 
-def main(genome_fna, gtf_file, output_file, feature):
-  # if len(sys.argv) != 4:
-  #   print("Usage: python3 extract.py <genome.fna> <annotation.gtf> <output_file>")
-  #   sys.exit(1)
-  
-  # genome_fna = sys.argv[1]
-  # gtf_file = sys.argv[2]
-  # output_file = sys.argv[3]
+def main():
+  if len(sys.argv) != 5:
+    print("Usage: python3 extract.py feature <genome.fna> <annotation.gtf> <output_file>")
+    sys.exit(1)
     
+  feature = sys.argv[1] #feature to extract, ex.CDS
+  genome_fna = sys.argv[2]
+  gtf_file = sys.argv[3]
+  output_file = sys.argv[4]
+  
   features = parse_gtf(gtf_file, feature)  
-  genome = load_genome(genome_fna)
+  genome = load_genome(genome_fna, True)
+  print(genome.keys())
   extract_and_write_features(genome, features, output_file)
   
   
-# if __name__ == "__main__":
-#   main()
-
-
-genome_fna = '/Users/haojun.xu/Desktop/Computational Genomics/Final Project/ASM584v2(K12)/ncbi_dataset/data/GCA_000005845.2/GCA_000005845.2_ASM584v2_genomic.fna'
-gtf_file = '/Users/haojun.xu/Desktop/Computational Genomics/Final Project/ASM584v2(K12)/ncbi_dataset/data/GCA_000005845.2/genomic.gtf'
-output_file = "/Users/haojun.xu/Desktop/Computational Genomics/Final Project/concatenated_exons_k12_alt.txt"
-main(genome_fna, gtf_file, output_file, feature="CDS")  
+if __name__ == "__main__":
+  main()

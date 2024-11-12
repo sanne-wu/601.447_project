@@ -1,0 +1,8 @@
+Ecoli_processed/536_cds.txt 536_cds
+Ecoli_processed/APECO1_cds.txt APECO1_cds
+Ecoli_processed/CFT073_cds.txt CFT073_cds
+Ecoli_processed/ED1a_cds.txt ED1a_cds
+Ecoli_processed/IAI39_cds.txt IAI39_cds
+Ecoli_processed/S88_cds.txt S88_cds
+Ecoli_processed/SMS35_cds.txt SMS35_cds
+Ecoli_processed/UTI89_cds.txt UTI89_cds
