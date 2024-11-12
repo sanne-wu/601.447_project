@@ -7,6 +7,6 @@ with open(paths, 'r') as file_list:
       with open(path, 'r') as original_file:
         content = original_file.read()
       new_content = f">{identity}\n" + content
-      output_path = f"{identity}.fna"
+      output_path = f"Ecoli_processed/fna/{identity}.fna"
       with open(output_path, 'w') as output_file:
           output_file.write(new_content)
