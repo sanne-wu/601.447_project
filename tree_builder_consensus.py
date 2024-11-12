@@ -104,7 +104,7 @@ def main(similarity_csv_paths, output_tree_path):
 
     # Write the tree to a file in Newick format
     with open(output_tree_path, 'w') as f:
-        f.write(tree.write("/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk"))
+        f.write(tree.write("/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk") + ";")
     print(f"Phylogenetic tree saved to {output_tree_path}.")
 
     # Optional: Print the tree to the console
