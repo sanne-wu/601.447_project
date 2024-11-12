@@ -1,0 +1,9 @@
+Ecoli_processed/fna/536_gene.fna
+Ecoli_processed/fna/APECO1_gene.fna
+Ecoli_processed/fna/CFT073_gene.fna
+Ecoli_processed/fna/E234869_gene.fna
+Ecoli_processed/fna/ED1a_gene.fna
+Ecoli_processed/fna/IAI39_gene.fna
+Ecoli_processed/fna/S88_gene.fna
+Ecoli_processed/fna/SMS35_gene.fna
+Ecoli_processed/fna/UTI89_gene.fna
