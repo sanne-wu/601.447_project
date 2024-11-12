@@ -3,40 +3,40 @@ import numpy as np
 from skbio import TreeNode, DistanceMatrix
 from skbio.tree import nj
 
-def read_similarity_csv(file_path):
+def readSimilarityCsv(filePath):
     # Reads a CSV file containing the similarity matrix.
-    similarity_df = pd.read_csv(file_path, index_col=0)
-    return similarity_df
+    similarityDf = pd.read_csv(filePath, index_col=0)
+    return similarityDf
 
-def similarity_to_distance(similarity_df):
+def similarityToDistance(similarityDf):
     # Ensure all similarities are between 0 and 1
-    similarity_df = similarity_df.clip(lower=0, upper=1)
+    similarityDf = similarityDf.clip(lower=0, upper=1)
     epsilon = 1e-10
-    similarity_df += epsilon
-    distance_df = -np.log(similarity_df)
-    np.fill_diagonal(distance_df.values, 0)
-    return distance_df
+    similarityDf += epsilon
+    distanceDf = -np.log(similarityDf)
+    np.fill_diagonal(distanceDf.values, 0)
+    return distanceDf
 
-def construct_tree(distance_df):
-    ids = distance_df.index.tolist()
-    distance_array = distance_df.values
-    dm = DistanceMatrix(distance_array, ids)
+def constructTree(distanceDf):
+    ids = distanceDf.index.tolist()
+    distanceArray = distanceDf.values
+    dm = DistanceMatrix(distanceArray, ids)
     tree = nj(dm)
     return tree
 
-def main(similarity_csv_path, output_tree_path):
-    similarity_df = read_similarity_csv(similarity_csv_path)
+def main(similarityCsvPath, outputTreePath):
+    similarityDf = readSimilarityCsv(similarityCsvPath)
     print("Similarity matrix loaded.")
-    distance_df = similarity_to_distance(similarity_df)
+    distanceDf = similarityToDistance(similarityDf)
     print("Similarity matrix converted to distance matrix.")
-    tree = construct_tree(distance_df)
+    tree = constructTree(distanceDf)
     print("Phylogenetic tree constructed using Neighbor-Joining method.")
-    tree.write(output_tree_path)
-    print(f"Phylogenetic tree saved to {output_tree_path}.")
+    tree.write(outputTreePath)
+    print(f"Phylogenetic tree saved to {outputTreePath}.")
     print("\nConstructed Phylogenetic Tree:")
     print(tree.ascii_art())
 
 if __name__ == "__main__":
-    similarity_csv_path = "/users/harry/desktop/Computational Genetics/Final project/code/cds_similarity_matrix.csv"  # Replace with your CSV file path
-    output_tree_path = "/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk"     # Output Newick file path
-    main(similarity_csv_path, output_tree_path)
+    similarityCsvPath = "/users/harry/desktop/Computational Genetics/Final project/code/cds_similarity_matrix.csv"  # Replace with your CSV file path
+    outputTreePath = "/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk"  # Output Newick file path
+    main(similarityCsvPath, outputTreePath)

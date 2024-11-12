@@ -11,113 +11,113 @@ from Bio import Phylo
 import io
 import dendropy
 
-def read_similarity_csv(file_path):
+def readSimilarityCsv(filePath):
     # Reads a CSV file containing the similarity matrix.
-    similarity_df = pd.read_csv(file_path, index_col=0)
-    return similarity_df
+    similarityDf = pd.read_csv(filePath, index_col=0)
+    return similarityDf
 
-def similarity_to_distance(similarity_df):
-    similarity_df = similarity_df.clip(lower=0, upper=1)
+def similarityToDistance(similarityDf):
+    similarityDf = similarityDf.clip(lower=0, upper=1)
     epsilon = 1e-10
-    similarity_df += epsilon
-    distance_df = -np.log(similarity_df)
-    np.fill_diagonal(distance_df.values, 0)
-    return distance_df
+    similarityDf += epsilon
+    distanceDf = -np.log(similarityDf)
+    np.fill_diagonal(distanceDf.values, 0)
+    return distanceDf
 
-def construct_tree(distance_df):
-    ids = distance_df.index.tolist()
-    distance_array = distance_df.values
-    dm = DistanceMatrix(distance_array, ids)
+def constructTree(distanceDf):
+    ids = distanceDf.index.tolist()
+    distanceArray = distanceDf.values
+    dm = DistanceMatrix(distanceArray, ids)
     tree = nj(dm)
     return tree
 
-def skbio_to_dendropy_tree(skbio_tree):
+def skbioToDendropyTree(skbioTree):
     # Use StringIO to capture the Newick output as a string
-    newick_io = io.StringIO()
-    skbio_tree.write(newick_io, format='newick')
-    newick_str = newick_io.getvalue()
-    newick_io.close()
+    newickIo = io.StringIO()
+    skbioTree.write(newickIo, format='newick')
+    newickStr = newickIo.getvalue()
+    newickIo.close()
     
     # Convert Newick string to a DendroPy Tree
-    dendropy_tree = dendropy.Tree.get(data=newick_str, schema="newick")
-    return dendropy_tree
+    dendropyTree = dendropy.Tree.get(data=newickStr, schema="newick")
+    return dendropyTree
 
-def calculate_bootstrap_support(original_tree, bootstrap_trees):
+def calculateBootstrapSupport(originalTree, bootstrapTrees):
 
-    if not bootstrap_trees:
+    if not bootstrapTrees:
         raise ValueError("The list of bootstrap trees is empty. Please provide bootstrap trees for support calculation.")
     
-    for node in original_tree.postorder_node_iter():
-        node.bootstrap_support = 0
+    for node in originalTree.postorderNodeIter():
+        node.bootstrapSupport = 0
 
-    original_tree.encode_bipartitions()
-    split_counts = {bipartition: 0 for bipartition in original_tree.bipartition_edge_map}
+    originalTree.encodeBipartitions()
+    splitCounts = {bipartition: 0 for bipartition in originalTree.bipartitionEdgeMap}
 
-    for bt in bootstrap_trees:
-        bt.encode_bipartitions()
-        for bipartition in bt.bipartition_edge_map:
-            if bipartition in split_counts:
-                split_counts[bipartition] += 1
+    for bt in bootstrapTrees:
+        bt.encodeBipartitions()
+        for bipartition in bt.bipartitionEdgeMap:
+            if bipartition in splitCounts:
+                splitCounts[bipartition] += 1
 
-    num_bootstrap_trees = len(bootstrap_trees)
-    for edge in original_tree.postorder_edge_iter():
-        if edge.head_node is not None and not edge.head_node.is_leaf():
+    numBootstrapTrees = len(bootstrapTrees)
+    for edge in originalTree.postorderEdgeIter():
+        if edge.headNode is not None and not edge.headNode.isLeaf():
             bipartition = edge.bipartition
-            support = (split_counts.get(bipartition, 0) / num_bootstrap_trees) * 100
-            edge.head_node.label = f"{support:.1f}%"
+            support = (splitCounts.get(bipartition, 0) / numBootstrapTrees) * 100
+            edge.headNode.label = f"{support:.1f}%"
 
-    return original_tree
+    return originalTree
 
-def visualize_tree(dendropy_tree, output_image_path):
-    newick_str = dendropy_tree.as_string(schema='newick')
+def visualizeTree(dendropyTree, outputImagePath):
+    newickStr = dendropyTree.asString(schema='newick')
 
     from Bio import Phylo
-    handle = StringIO(newick_str)
-    phylo_tree = Phylo.read(handle, 'newick')
+    handle = StringIO(newickStr)
+    phyloTree = Phylo.read(handle, 'newick')
 
     # Draw the tree using matplotlib
     fig = plt.figure(figsize=(12, 8))
     axes = fig.add_subplot(1, 1, 1)
-    Phylo.draw(phylo_tree, do_show=False, axes=axes)
+    Phylo.draw(phyloTree, do_show=False, axes=axes)
 
     # Save the figure to a file
-    plt.savefig(output_image_path, format='png', dpi=300)
+    plt.savefig(outputImagePath, format='png', dpi=300)
     plt.close(fig)
-    print(f"Annotated phylogenetic tree visualization saved to {output_image_path}.")
+    print(f"Annotated phylogenetic tree visualization saved to {outputImagePath}.")
 
-def main(original_similarity_csv, bootstrap_similarity_dir, output_tree_path, output_image_path):
-    similarity_df = read_similarity_csv(original_similarity_csv)
+def main(originalSimilarityCsv, bootstrapSimilarityDir, outputTreePath, outputImagePath):
+    similarityDf = readSimilarityCsv(originalSimilarityCsv)
     print("Original similarity matrix loaded.")
 
-    distance_df = similarity_to_distance(similarity_df)
+    distanceDf = similarityToDistance(similarityDf)
     print("Original similarity matrix converted to distance matrix.")
 
-    original_skbio_tree = construct_tree(distance_df)
+    originalSkbioTree = constructTree(distanceDf)
     print("Original phylogenetic tree constructed using Neighbor-Joining method.")
 
-    original_tree = skbio_to_dendropy_tree(original_skbio_tree)
+    originalTree = skbioToDendropyTree(originalSkbioTree)
 
-    bootstrap_trees = []
-    bootstrap_files = glob.glob(f"{bootstrap_similarity_dir}/*.csv")
-    print(f"Found {len(bootstrap_files)} bootstrap similarity matrices.")
+    bootstrapTrees = []
+    bootstrapFiles = glob.glob(f"{bootstrapSimilarityDir}/*.csv")
+    print(f"Found {len(bootstrapFiles)} bootstrap similarity matrices.")
 
-    for i, file_path in enumerate(bootstrap_files):
-        sim_df = read_similarity_csv(file_path)
-        dist_df = similarity_to_distance(sim_df)
-        skbio_tree = construct_tree(dist_df)
-        dendropy_tree = skbio_to_dendropy_tree(skbio_tree)
-        bootstrap_trees.append(dendropy_tree)
-        print(f"Processed bootstrap tree {i+1}/{len(bootstrap_files)}")
+    for i, filePath in enumerate(bootstrapFiles):
+        simDf = readSimilarityCsv(filePath)
+        distDf = similarityToDistance(simDf)
+        skbioTree = constructTree(distDf)
+        dendropyTree = skbioToDendropyTree(skbioTree)
+        bootstrapTrees.append(dendropyTree)
+        print(f"Processed bootstrap tree {i+1}/{len(bootstrapFiles)}")
 
-    annotated_tree = calculate_bootstrap_support(original_tree, bootstrap_trees)
+    annotatedTree = calculateBootstrapSupport(originalTree, bootstrapTrees)
     print("Bootstrap support values calculated and annotated on the original tree.")
-    annotated_tree.write(path=output_tree_path, schema='newick')
-    print(f"Annotated phylogenetic tree saved to {output_tree_path}.")
-    visualize_tree(annotated_tree, output_image_path)
+    annotatedTree.write(path=outputTreePath, schema='newick')
+    print(f"Annotated phylogenetic tree saved to {outputTreePath}.")
+    visualizeTree(annotatedTree, outputImagePath)
 
 if __name__ == "__main__":
-    original_similarity_csv = "/users/harry/desktop/Computational Gentics/Final project/similarity_matrix.csv"  # Path to the original similarity matrix
-    bootstrap_similarity_dir = "/users/harry/desktop/Computational Gentics/Final project/bootstrap_matrices"    # Directory containing bootstrap similarity matrices
-    output_tree_path = "/users/harry/desktop/Computational Gentics/Final project/annotated_phylogenetic_tree.nwk"  # Output Newick file path
-    output_image_path = "/users/harry/desktop/Computational Gentics/Final project/annotated_phylogenetic_tree.png" # Output image file path
-    main(original_similarity_csv, bootstrap_similarity_dir, output_tree_path, output_image_path)
+    originalSimilarityCsv = "/users/harry/desktop/Computational Gentics/Final project/similarity_matrix.csv"  # Path to the original similarity matrix
+    bootstrapSimilarityDir = "/users/harry/desktop/Computational Gentics/Final project/bootstrap_matrices"    # Directory containing bootstrap similarity matrices
+    outputTreePath = "/users/harry/desktop/Computational Gentics/Final project/annotated_phylogenetic_tree.nwk"  # Output Newick file path
+    outputImagePath = "/users/harry/desktop/Computational Gentics/Final project/annotated_phylogenetic_tree.png" # Output image file path
+    main(originalSimilarityCsv, bootstrapSimilarityDir, outputTreePath, outputImagePath)
