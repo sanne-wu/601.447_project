@@ -27,7 +27,9 @@ def similarityToDistance(similarityDfs):
 def computeConsensusDistance(distanceDfs):
     # Stack the distance matrices along a new axis
     stackedDistances = np.stack([df.values for df in distanceDfs], axis=2)
-    consensusDistances = np.mean(stackedDistances, axis=2)
+    weights = np.array([1, 2, 1])
+    consensusDistances = np.average(stackedDistances, axis=2, weights=weights)
+    # consensusDistances = np.mean(stackedDistances, axis=2)
     ids = distanceDfs[0].index.tolist()
     consensusDf = pd.DataFrame(consensusDistances, index=ids, columns=ids)
     return consensusDf
@@ -41,11 +43,11 @@ def constructTree(distanceDf):
 
 def main(similarityCsvPaths, outputTreePath):
 
-    distanceDfs = readSimilarityCsvs(similarityCsvPaths)
-    # print(f"{len(similarityDfs)} similarity matrices loaded.")
+    similarityDfs = readSimilarityCsvs(similarityCsvPaths)
+    print(f"{len(similarityDfs)} similarity matrices loaded.")
 
-    # distanceDfs = similarityToDistance(similarityDfs)
-    # print("Similarity matrices converted to distance matrices.")
+    distanceDfs = similarityToDistance(similarityDfs)
+    print("Similarity matrices converted to distance matrices.")
 
     consensusDistanceDf = computeConsensusDistance(distanceDfs)
     print("Consensus distance matrix computed by averaging.")
@@ -56,14 +58,14 @@ def main(similarityCsvPaths, outputTreePath):
     with open(outputTreePath, 'w') as f:
         f.write(tree.write("/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk") + ";")
     print(f"Phylogenetic tree saved to {outputTreePath}.")
-
     print("\nConstructed Phylogenetic Tree:")
     print(tree.ascii_art())
 
 if __name__ == "__main__":
     similarityCsvPaths = [
-        "/users/harry/desktop/Computational Genetics/Final project/code/dashing_geno_distance_matrix.csv",
-        "/users/harry/desktop/Computational Genetics/Final project/code/dashing_distance_matrix_cds.csv",
+        "/users/harry/desktop/Computational Genetics/Final project/code/Ecoli_processed/g_distance_matrix.csv",
+        "/users/harry/desktop/Computational Genetics/Final project/code/Ecoli_processed/cds_distance_matrix.csv",
+        "/users/harry/desktop/Computational Genetics/Final project/code/Ecoli_processed/wg_distance_matrix.csv"
     ]
     outputTreePath = "/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk"
     main(similarityCsvPaths, outputTreePath)

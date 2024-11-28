@@ -25,9 +25,9 @@ def constructTree(distanceDf):
     return tree
 
 def main(similarityCsvPath, outputTreePath):
-    distanceDf = readSimilarityCsv(similarityCsvPath)
-    # print("Similarity matrix loaded.")
-    # distanceDf = similarityToDistance(similarityDf)
+    similarityDf = readSimilarityCsv(similarityCsvPath)
+    print("Similarity matrix loaded.")
+    distanceDf = similarityToDistance(similarityDf)
     print("Similarity matrix converted to distance matrix.")
     tree = constructTree(distanceDf)
     print("Phylogenetic tree constructed using Neighbor-Joining method.")
@@ -37,6 +37,6 @@ def main(similarityCsvPath, outputTreePath):
     print(tree.ascii_art())
 
 if __name__ == "__main__":
-    similarityCsvPath = "/users/harry/desktop/Computational Genetics/Final project/code/dashing_geno_distance_matrix.csv"  # Replace with your CSV file path
+    similarityCsvPath = "/users/harry/desktop/Computational Genetics/Final project/code/minhash_gene_similarity_matrix.csv"  # Replace with your CSV file path
     outputTreePath = "/users/harry/desktop/Computational Genetics/Final project/phylogenetic_tree.nwk"  # Output Newick file path
     main(similarityCsvPath, outputTreePath)
