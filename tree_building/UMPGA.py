@@ -81,13 +81,13 @@ def main():
     
     # Specify the paths to your input distance matrix CSV files
     input_file_paths = [
-        '/users/harry/desktop/Computational Gentics/Final project/distance_matrix_whole_genome.csv',
-        '/users/harry/desktop/Computational Gentics/Final project/distance_matrix_gene_level.csv',
-        '/users/harry/desktop/Computational Gentics/Final project/distance_matrix_cds.csv'
+        '/users/harry/desktop/Computational Genetics/Final project/code/distance_matrix_whole_genome.csv',
+        '/users/harry/desktop/Computational Genetics/Final project/code/distance_matrix_gene_level.csv',
+        '/users/harry/desktop/Computational Genetics/Final project/code/distance_matrix_cds.csv'
     ]
     
     # Specify the output directory where all outputs will be saved
-    output_dir = '/users/harry/desktop/Computational Gentics/Final project/resukt/UMPGA'  
+    output_dir = '/users/harry/desktop/Computational Genetics/Final project/code/result/UMPGA'  
     
     # Ensure the Output Directory Exists
     os.makedirs(output_dir, exist_ok=True)
