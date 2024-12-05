@@ -48,7 +48,7 @@ def extract_and_write_features(genome, features, output_file):
 
 def main():
   if len(sys.argv) != 5:
-    print("Usage: python3 extract_multiple.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
+    print("Usage: python3 extract_line_by_line_with_names.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
     sys.exit(1)
 
   feature = sys.argv[1]
@@ -56,31 +56,32 @@ def main():
   gtf_list_file = sys.argv[3]
   output_paths_file = sys.argv[4]
 
-  #read input file paths: genome_list and gtf_list
-  with open(genome_list_file, 'r') as g_list, open(gtf_list_file, 'r') as gtf_list:
-    genome_files = [line.strip() for line in g_list]
-    gtf_files = [line.strip() for line in gtf_list]
+  with open(genome_list_file, 'r') as genome_list, open(gtf_list_file, 'r') as gtf_list, open(output_paths_file, 'w') as out_paths:
+    for genome_line, gtf_line in zip(genome_list, gtf_list):
+      genome_line = genome_line.strip()
+      gtf_line = gtf_line.strip()
 
-  if len(genome_files) != len(gtf_files):
-    print("Error: The number of genome files and GTF files must match.")
-    sys.exit(1)
+      if not genome_line or not gtf_line:
+        print(f"Skipping empty line: genome='{genome_line}', gtf='{gtf_line}'")
+        continue
 
-  #output paths
-  output_files = []
-  for genome_path, gtf_path in zip(genome_files, gtf_files):
-    genome_name = os.path.basename(genome_path).replace(".fna", "")
-    output_file = f"{genome_name}_{feature}_sequences.fna"
-    output_files.append(output_file)
+      # Parse genome_name and paths
+      genome_name, genome_path = genome_line.split(" ", 1)
+      gtf_name, gtf_path = gtf_line.split(" ", 1)
 
-    #extract features and write to file
-    features = parse_gtf(gtf_path, feature)
-    genome = load_genome(genome_path, True)
-    extract_and_write_features(genome, features, output_file)
+      if genome_name != gtf_name:
+        print(f"Mismatch in genome and GTF names: {genome_name} vs {gtf_name}")
+        continue
 
-  # Write output paths to a file
-  with open(output_paths_file, 'w') as out_paths:
-    for output_file in output_files:
+      output_file = f"{genome_name}_{feature}_sequences.fna"
+
+      #process the genomes and GTF file
+      features = parse_gtf(gtf_path, feature)
+      genome = load_genome(genome_path, True)
+      extract_and_write_features(genome, features, output_file)
+
+      #write output path to <output_paths.txt>
       out_paths.write(f"{os.path.abspath(output_file)}\n")
 
 if __name__ == "__main__":
-  main()
+    main()
