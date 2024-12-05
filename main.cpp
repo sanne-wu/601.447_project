@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc < 4) {
-        cout << "usage: ./minhash 'list_name' 'kmer size' 'bottom-k parameter' 'output_name'(optional)" << endl;
+        cout << "usage: ./minhash <list_name> <kmer size> <bottom-k parameter> <output_name (optional)>" << endl;
         return 1;
     }
        
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     }
     if (argc == 5) {
         ofstream temp;
-        temp.open(argv[2]);
+        temp.open(argv[4]);
         make_similarity_matrix(list_name, t, myhash, k, temp);
         temp.close();
         return 0;
