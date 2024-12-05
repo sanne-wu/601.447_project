@@ -24,11 +24,14 @@ using std::cout;
 using std::endl;
 using std::setw;
 
-unordered_set<string> bottom_k_sketch(const unordered_set<string>& kmers, hash<string> my_hash,  size_t k);
+template <typename T>
+unordered_set<size_t> bottom_k_sketch(const unordered_set<T>& S, hash<T> my_hash,  size_t k);
 
-unordered_set<string> bottom_k_sketch_fromfile(const string& filename,  size_t kmer_size, hash<string> my_hash,  size_t k);
+unordered_set<size_t> bottom_k_sketch(const unordered_set<size_t>& S, size_t k);
 
-double estimate_jaccard(const unordered_set<string>& A, const unordered_set<string>& B, hash<string> my_hash, size_t k=0);
+unordered_set<size_t> bottom_k_sketch_fromfile(const string& filename,  size_t kmer_size, hash<string> my_hash,  size_t k);
+
+double estimate_jaccard(const unordered_set<size_t>& A, const unordered_set<size_t>& B, size_t k=0);
 
 unordered_set<string> make_kmer_set(const string& s, size_t k);
 
