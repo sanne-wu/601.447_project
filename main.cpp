@@ -1,15 +1,38 @@
 #include "minhash.h"
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        cout << "missing list filename" << endl;
+    if (argc < 4) {
+        cout << "usage: ./minhash 'list_name' 'kmer size' 'bottom-k parameter' 'output_name'(optional)" << endl;
         return 1;
     }
-    string list_name = argv[1];
-    
-    int k = 31;
+       
+    // hash function
     hash<string> myhash;
-    int s = 200;
+    string list_name;
+    int t;
+    int k;
+    try {
+        list_name = argv[1];
+        t = stoi(argv[2]);
+        k = stoi(argv[3]);
+    } catch(...) {
+        cerr << "one or more type errors in input" << endl;
+        return 1;
+    }
+    if (argc == 4) {
+        make_similarity_matrix(list_name, t, myhash, k);
+        return 0;
+    }
+    if (argc == 5) {
+        ofstream temp;
+        temp.open(argv[2]);
+        make_similarity_matrix(list_name, t, myhash, k, temp);
+        temp.close();
+        return 0;
+    }
+    cerr << "number of arguments incorrect" << endl;
+    return 1;
+
 
     // testing for large length strings
     /*
@@ -47,18 +70,4 @@ int main(int argc, char* argv[]) {
         cout << endl;
     }
     */
-
-    if (argc == 2) {
-        make_similarity_matrix(list_name, k, myhash, s);
-        return 0;
-    } else if (argc == 3) {
-        ofstream temp;
-        temp.open(argv[2]);
-        make_similarity_matrix(list_name, k, myhash, s, temp);
-        temp.close();
-        return 0;
-    }
-    cout << "number of arguments incorrect" << endl;
-    return 1;
-
 }

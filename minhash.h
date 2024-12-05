@@ -22,7 +22,9 @@ using std::vector;
 using std::unordered_map;
 using std::cout;
 using std::endl;
+using std::cerr;
 using std::setw;
+using std::stoi;
 
 template <typename T>
 unordered_set<size_t> bottom_k_sketch(const unordered_set<T>& S, hash<T> my_hash,  size_t k);

@@ -53,16 +53,23 @@ unordered_set<size_t> bottom_k_sketch_fromfile(const string& filename,  size_t k
 
     string kmer;
     char c;
-    
     priority_queue<size_t> pq;
 
     while (genome_input.get(c)) {
-        if (!is_nucleotide(c)) continue;
-        if (kmer.length() < kmer_size) {
-            kmer.push_back(c);
+        if (c == '>') {
+            genome_input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {
-            kmer.erase(kmer.begin());
-            kmer.push_back(c);
+            if (!is_nucleotide(c)) continue;
+            if (kmer.length() < kmer_size) {
+                kmer.push_back(c);
+                if (kmer.length() != kmer_size) {
+                    continue;
+                }
+            } else {
+                kmer.erase(kmer.begin());
+                kmer.push_back(c);
+            }
+            
             size_t temp = my_hash(kmer);
             if (pq.size() < k) {
                 pq.push(temp);
