@@ -6,9 +6,9 @@ def main():
         print("Usage: python3 wrapper.py <paths_to_genome> <paths_to_annotations> <level_flag = cds, gene> <kmer size> <bottom-k parameter (optional)>")
         sys.exit(1)
     # inputs to wrapper and each component
-    paths_to_genome = sys.argv[1]
-    paths_to_annotations = sys.argv[2]
-    level_flag = sys.argv[3]
+    paths_to_genome = sys.argv[1] #input file with paths to genome.fna
+    paths_to_annotations = sys.argv[2] #input file with paths to gtf
+    level_flag = sys.argv[3] #feature level for extraction
     kmer_size = sys.argv[4]
     bottom_k_param = str(200)
     if (len(sys.argv) == 6):
@@ -16,7 +16,6 @@ def main():
     
     # inputs to preprocessing
     preprocessing_output = "list.txt"
-
 
 
     # call preprocessing with subprocess command line

@@ -48,7 +48,7 @@ def extract_and_write_features(genome, features, output_file):
 
 def main():
   if len(sys.argv) != 5:
-    print("Usage: python3 extract_line_by_line_with_names.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
+    print("Usage: python3 extract_multiple.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
     sys.exit(1)
 
   feature = sys.argv[1]
@@ -65,7 +65,7 @@ def main():
         print(f"Skipping empty line: genome='{genome_line}', gtf='{gtf_line}'")
         continue
 
-      # Parse genome_name and paths
+      #parse genome_name and paths line by line
       genome_name, genome_path = genome_line.split(" ", 1)
       gtf_name, gtf_path = gtf_line.split(" ", 1)
 
