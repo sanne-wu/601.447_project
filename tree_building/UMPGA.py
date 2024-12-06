@@ -89,5 +89,5 @@ def UMPGA(generalFolder):
     plt.savefig(plotPath, dpi=300)
 
 if __name__ == "__main__":
-    generalFolderInput = '/users/harry/desktop/Computational Genetics/Final project/code/'
+    generalFolderInput = '/users/harry/desktop/Computational_Genetics/Final_project/code/'
     UMPGA(generalFolderInput)
