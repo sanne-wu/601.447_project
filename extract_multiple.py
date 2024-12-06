@@ -56,6 +56,10 @@ def main():
   genome_list_file = sys.argv[2]
   gtf_list_file = sys.argv[3]
   output_folder = sys.argv[4]
+  
+  levels = ["genome", "CDS", "gene", "transcript", "exon"]
+  if feature not in levels:
+    return 1
 
   if not os.path.exists(output_folder): #check if output folder exists
     print(f"Output folder '{output_folder}' does not exist. A new folder called '{output_folder}' will be created.")
