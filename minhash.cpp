@@ -116,7 +116,7 @@ unordered_set<string> make_kmer_set(const string& s, size_t k) {
     return kmer_set;
 }
 
-void make_similarity_matrix(const string& filename, size_t kmer_size, hash<string> my_hash, size_t k, ostream& out) {
+void make_similarity_matrix(const string& filename, size_t kmer_size, hash<string> my_hash, size_t k, ostream& out, bool distance) {
     ifstream file_list;
     file_list.open(filename);
     string file;
@@ -133,7 +133,7 @@ void make_similarity_matrix(const string& filename, size_t kmer_size, hash<strin
     for (size_t i = 0; i < n; i++) {
         for (size_t j = 0; j <= i; j++) {
             if (i == j) {
-                similarity_matrix[i][j] = 1;
+                similarity_matrix[i][j] = (distance) ? 0 : 1;
             } else {
                 string A_name = names[i];
                 string B_name = names[j];
@@ -144,8 +144,16 @@ void make_similarity_matrix(const string& filename, size_t kmer_size, hash<strin
                     sketches[B_name] = bottom_k_sketch_fromfile(name_to_file[B_name], kmer_size, my_hash, k);
                 }
                 double jaccard_estimate = estimate_jaccard(sketches[A_name], sketches[B_name], k);
-                similarity_matrix[i][j] = jaccard_estimate;
-                similarity_matrix[j][i] = jaccard_estimate;
+                double temp = jaccard_estimate;
+                if (distance) {
+                    if (jaccard_estimate == 0) {
+                        temp = INT_MAX;
+                    } else {
+                        temp = -1*log(jaccard_estimate);
+                    }
+                }
+                similarity_matrix[i][j] = temp;
+                similarity_matrix[j][i] = temp;
             }
         }
     }
@@ -161,6 +169,7 @@ void make_similarity_matrix(const string& filename, size_t kmer_size, hash<strin
         }
         out << endl;
     }
+    file_list.close();
 }
 
 bool is_nucleotide(char c) {

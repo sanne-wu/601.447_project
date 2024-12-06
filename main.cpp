@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc < 4) {
-        cout << "usage: ./minhash <list_name> <kmer size> <bottom-k parameter> <output_name (optional)>" << endl;
+        cout << "usage: ./minhash <list_name> <kmer size> <bottom-k parameter> <output_name (optional)> <-d (optional)>" << endl;
         return 1;
     }
        
@@ -20,13 +20,30 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     if (argc == 4) {
-        make_similarity_matrix(list_name, t, myhash, k);
+        make_similarity_matrix(list_name, t, myhash, k, cout);
         return 0;
     }
     if (argc == 5) {
+        bool flag = (string(argv[argc - 1]) == "-d");
+        if (flag) {
+            make_similarity_matrix(list_name, t, myhash, k, cout, true);
+            return 0;
+        } else {
+            ofstream temp;
+            temp.open(argv[4]);
+            make_similarity_matrix(list_name, t, myhash, k, temp);
+            temp.close();
+            return 0;
+        }
+    }
+    if (argc == 6) {
+        if (string(argv[argc - 1]) != "-d") {
+            cerr << "unknown last argument" << endl;
+            return 1;
+        }
         ofstream temp;
         temp.open(argv[4]);
-        make_similarity_matrix(list_name, t, myhash, k, temp);
+        make_similarity_matrix(list_name, t, myhash, k, temp, true);
         temp.close();
         return 0;
     }

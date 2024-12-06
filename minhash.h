@@ -7,6 +7,8 @@
 #include <vector>
 #include <unordered_map>
 #include <iostream>
+#include <cmath>
+#include <climits>
 
 using std::string;
 using std::hash;
@@ -25,6 +27,7 @@ using std::endl;
 using std::cerr;
 using std::setw;
 using std::stoi;
+using std::log;
 
 template <typename T>
 unordered_set<size_t> bottom_k_sketch(const unordered_set<T>& S, hash<T> my_hash,  size_t k);
@@ -37,6 +40,6 @@ double estimate_jaccard(const unordered_set<size_t>& A, const unordered_set<size
 
 unordered_set<string> make_kmer_set(const string& s, size_t k);
 
-void make_similarity_matrix(const string& filename, size_t kmer_size, hash<string> my_hash, size_t k, ostream& out=cout);
+void make_similarity_matrix(const string& filename, size_t kmer_size, hash<string> my_hash, size_t k, ostream& out, bool distance=false);
 
 bool is_nucleotide(char c);
