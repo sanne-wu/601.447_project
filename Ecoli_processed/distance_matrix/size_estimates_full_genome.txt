@@ -1,0 +1,10 @@
+#Path	Size (est.)
+CFT073_full_genome.fna	4380406
+SMS35_full_genome.fna	4258292
+ED1a_full_genome.fna	4255794
+UTI89_full_genome.fna	4420834
+S88_full_genome.fna	4367612
+IAI39_full_genome.fna	4239962
+E234869_full_genome.fna	4377177
+APECO1_full_genome.fna	4273529
+536_full_genome.fna	4102372

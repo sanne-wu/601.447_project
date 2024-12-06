@@ -1,0 +1,10 @@
+#Path	Size (est.)
+CFT073_cds.fna	3797552
+SMS35_cds.fna	3787247
+ED1a_cds.fna	3739757
+UTI89_cds.fna	3910828
+S88_cds.fna	3840236
+IAI39_cds.fna	3719491
+E234869_cds.fna	3875070
+APECO1_cds.fna	3808251
+536_cds.fna	3590792

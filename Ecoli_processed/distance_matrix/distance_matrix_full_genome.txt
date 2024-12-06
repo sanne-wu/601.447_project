@@ -1,0 +1,10 @@
+##Names	CFT073_full_genome	SMS35_full_genome	ED1a_full_genome	UTI89_full_genome	S88_full_genome	IAI39_full_genome	E234869_full_genome	APECO1_full_genome	536_full_genome
+CFT073_full_genome	-	0.0283087	0.0152584	0.0128429	0.0128324	0.0269989	0.0207191	0.0117364	0.0124287
+SMS35_full_genome	-	-	0.0253637	0.0268513	0.0254187	0.0179118	0.0255412	0.0242307	0.0265315
+ED1a_full_genome	-	-	-	0.0159423	0.0140498	0.0296445	0.0210846	0.0142093	0.016752
+UTI89_full_genome	-	-	-	-	0.00670378	0.0268561	0.0197143	0.00365463	0.0128251
+S88_full_genome	-	-	-	-	-	0.027295	0.0201021	0.00652741	0.0151777
+IAI39_full_genome	-	-	-	-	-	-	0.0273252	0.0257229	0.0270233
+E234869_full_genome	-	-	-	-	-	-	-	0.0177936	0.0241251
+APECO1_full_genome	-	-	-	-	-	-	-	-	0.0130635
+536_full_genome	-	-	-	-	-	-	-	-	-

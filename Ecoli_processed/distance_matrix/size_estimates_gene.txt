@@ -1,0 +1,10 @@
+#Path	Size (est.)
+CFT073_gene.fna	3808751
+SMS35_gene.fna	3798437
+ED1a_gene.fna	3754103
+UTI89_gene.fna	3929874
+S88_gene.fna	3865015
+IAI39_gene.fna	3747063
+E234869_gene.fna	3889421
+APEC01_gene.fna	3818234
+536_gene.fna	3595077
