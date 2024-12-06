@@ -3,7 +3,7 @@ import sys
 
 def main():
     if len(sys.argv) < 5 or len(sys.argv) > 6:
-        print("Usage: python3 wrapper.py <paths_to_genome> <paths_to_annotations> <level_flag = cds, gene> <kmer size> <bottom-k parameter (optional)>")
+        print("Usage: python3 wrapper.py <paths_to_genome> <paths_to_annotations> <level_flag = CDS, gene> <kmer size> <bottom-k parameter (optional)>")
         sys.exit(1)
     # inputs to wrapper and each component
     paths_to_genome = sys.argv[1] #input file with paths to genome.fna
@@ -15,8 +15,8 @@ def main():
         bottom_k_param = sys.argv[5]
     
     # inputs to preprocessing
-    preprocessing_output = "list.txt"
-
+    preprocessing_output = "preprocessed_out.txt"
+    subprocess.run(["python3", "extract_multiple.py", level_flag, paths_to_genome, paths_to_annotations, preprocessing_output])
 
     # call preprocessing with subprocess command line
     ###
@@ -25,7 +25,8 @@ def main():
     # inputs to minhash via command line
     minhash_output = "minhash_out.csv"
     subprocess.run(["./minhash", preprocessing_output, kmer_size, bottom_k_param, minhash_output], capture_output=True, text=True)
-    
+    # subprocess.run(["rm", preprocessing_output])
+
 
     # remove intermediate file
     # subprocess.run(["rm", "minhash_out.csv"])
