@@ -1,0 +1,6 @@
+#NEXUS
+BEGIN TREES;
+    TREE distance_matrix_gene_level = ((IAI39.fna:0.01,SMS35.fna:0.01):0.01,(E234869.fna:0.02,(ED1a.fna:0.01,((UTI89.fna:0.0,(APEC01.fna:0.0,S88.fna:0.0):0.0):0.01,(536.fna:0.01,CFT073.fna:0.01):0.0):0.0):0.0):0.01);
+    TREE distance_matrix_whole_genome = ((IAI39.fna:0.01,SMS35.fna:0.01):0.01,(E234869.fna:0.01,(ED1a.fna:0.01,((UTI89.fna:0.0,(APEC01.fna:0.0,S88.fna:0.0):0.0):0.01,(536.fna:0.01,CFT073.fna:0.01):0.0):0.0):0.0):0.01);
+    TREE distance_matrix_cds = (ED1a.fna:0.01,(((536.fna:0.01,CFT073.fna:0.01):0.0,(E234869.fna:0.01,(APEC01.fna:0.0,(S88.fna:0.0,UTI89.fna:0.0):0.0):0.0):0.0):0.0,(IAI39.fna:0.01,SMS35.fna:0.01):0.0):0.0);
+END;

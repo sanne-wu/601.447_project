@@ -90,3 +90,20 @@
 2024-12-06 14:22:22,906 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_gene.nwk
 2024-12-06 14:22:22,906 [INFO] Consensus tree plot saved at: /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Majority_Rule_Consensus_Tree_gene.png
 2024-12-06 14:22:22,906 [INFO] NN, UPGMA clustering, and consensus tree generation completed successfully.
+2024-12-06 17:10:03,217 [INFO] Starting phylogenetic analysis in folder: /users/harry/desktop/Computational_Genetics/Final_project/code/
+2024-12-06 17:10:09,618 [INFO] Processing consensus for category: cds
+2024-12-06 17:10:09,619 [INFO] Number of majority splits for cds: 8
+2024-12-06 17:10:09,772 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_cds.nex
+2024-12-06 17:10:09,772 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_cds.nwk
+2024-12-06 17:10:09,772 [INFO] Consensus tree plot saved at: /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Majority_Rule_Consensus_Tree_cds.png
+2024-12-06 17:10:09,772 [INFO] Processing consensus for category: gene
+2024-12-06 17:10:09,773 [INFO] Number of majority splits for gene: 8
+2024-12-06 17:10:09,926 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_gene.nex
+2024-12-06 17:10:09,926 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_gene.nwk
+2024-12-06 17:10:09,926 [INFO] Consensus tree plot saved at: /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Majority_Rule_Consensus_Tree_gene.png
+2024-12-06 17:10:09,926 [INFO] Processing consensus for category: whole_genome
+2024-12-06 17:10:09,926 [INFO] Number of majority splits for whole_genome: 8
+2024-12-06 17:10:10,108 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_whole_genome.nex
+2024-12-06 17:10:10,108 [INFO] Consensus tree saved to /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Consensus_Majority_Rule_Tree_whole_genome.nwk
+2024-12-06 17:10:10,108 [INFO] Consensus tree plot saved at: /users/harry/desktop/Computational_Genetics/Final_project/code/result/Consensus/Majority_Rule_Consensus_Tree_whole_genome.png
+2024-12-06 17:10:10,108 [INFO] NN, UPGMA clustering, and consensus tree generation completed successfully.

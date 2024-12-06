@@ -12,6 +12,9 @@ from NN import NN
 from UMPGA import UMPGA
 import logging
 from MinEvolution import minEvolution
+from FM import FM 
+from HRA import HRA
+from HRC import HRC
 
 def setupLogging(logFilePath):
     logging.basicConfig(
@@ -108,8 +111,11 @@ def buildConsensus(generalFolder):
     nnFolder = os.path.join(generalFolder, "result", "NN")
     umpgaFolder = os.path.join(generalFolder, "result", "UMPGA")
     minFolder = os.path.join(generalFolder, "result", "MinE")
-    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(umpgaFolder, "*.nex")) +  glob.glob(os.path.join(minFolder, "*.nex"))
-    categories = ['whole_genome', 'cds', 'gene']
+    fmFolder = os.path.join(generalFolder, "result", "FM")
+    hrcFolder = os.path.join(generalFolder, "result", "HRC")
+    hraFolder = os.path.join(generalFolder, "result", "HRA")
+    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(umpgaFolder, "*.nex")) +  glob.glob(os.path.join(minFolder, "*.nex")) + glob.glob(os.path.join(fmFolder, "*.nex")) + glob.glob(os.path.join(hrcFolder, "*.nex")) + glob.glob(os.path.join(hraFolder, "*.nex"))
+    categories = ['cds', 'gene','whole_genome']
     trees_by_category = {category: [] for category in categories}
     for filePath in treeFiles:
         if not os.path.exists(filePath):
@@ -167,6 +173,9 @@ def main():
     NN(generalFolder)
     UMPGA(generalFolder)
     minEvolution(generalFolder)
+    FM(generalFolder)
+    HRC(generalFolder)
+    HRA(generalFolder)
     buildConsensus(generalFolder)
     logging.info("NN, UPGMA clustering, and consensus tree generation completed successfully.")
 
