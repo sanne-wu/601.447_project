@@ -22,16 +22,16 @@ The following Python packages are required:
 **`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`. If this is not specified, it will produce results for all five levels. \
 **`-t, --kmersize`:** (optional) The size of kmers to be used in the similarity comparison. Default is 31.\
 **`-k, --bottomkparam`:** (optional) Used only for minHash. Specifies the sketch size when computing the bottom-k sketch. Default is 200. \
-**`-c, --clean`:** (optional) Specifying the `-c` tag will clean intermediate files produced by the program. This includes the distance matrices produced by Dashing and minHash, along with the preprocessed .fna files.\
+**`-c, --clean`:** (optional) Specifying the `-c` flag will clean intermediate files produced by the program. This includes the distance matrices produced by Dashing and minHash, along with the preprocessed .fna files.\
 **`-fo, --fna_output`:** (optional) Specifies the path to output the processed .fna in the preprocessing stage. \
 **`-o, --output`:** (required) Specifies the folder that will contain the output of the tree. \
-**`-d, --dashing`:** (optional) Specifying the `-d` tag will produce the distance matrix with dashing instead of minHash.
+**`-d, --dashing`:** (optional) Specifying the `-d` flag will produce the distance matrix with dashing instead of minHash.
 
 ## Running Sketch2Phylo
 ### Simple use case:
 ```bash
-python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt \
-                   -pa preprocessing_test/input_gtf_paths.txt \
+python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt 
+                   -pa preprocessing_test/input_gtf_paths.txt 
                    -o test -c
 ```
 In addition to running the program as an end-to-end pipeline, each part can also be ran separately for more control over the process.
@@ -42,7 +42,7 @@ python3 extract_multiple.py <feature> <genome_list> <gtf_list> <output_folder>
 ```
 #### Example use case:
 ```bash
-python3 extract_multiple.py exon preprocessing_test/input_genome_paths.txt \
+python3 extract_multiple.py exon preprocessing_test/input_genome_paths.txt 
         preprocessing_test/input_gtf_paths.txt preprocessing_test/output_exons
 ```
 
@@ -55,7 +55,7 @@ The formatted file used by minHash is stored in `output_feature_paths` where `fe
 ./minhash <list_name> <kmer size> <bottom-k parameter> <output_name (optional)> <-d (optional)>
 ```
 #### Example use case:
-This reproduces the Table I in the write-up.
+This reproduces the Table II in the write-up.
 
 ```bash
 ./minhash list.txt 31 200
@@ -78,4 +78,4 @@ python3 consensus.py test
 
 The program produces trees from different methods such as NN, UMPGA, and MinE, then forms a Consensus between them.\
 Input is placed within `tree_folder/input/`, which is 3 similarity matrices at the different genome levels produced either by dashing or minHash. \
- Results from each of these are output into the `tree_folder/result/` folder under their respective names.
+Results from each of these are output into the `tree_folder/result/` folder under their respective names.
