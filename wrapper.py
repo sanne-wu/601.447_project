@@ -22,11 +22,11 @@ def main():
     parser.add_argument("-pa", "--annotationpaths", dest = "paths_to_annotations", help="Path to input file holding paths to gtf files", required=True)
     parser.add_argument("-l", "--level", dest = "level_flag", help="Level of preprocessing Options: genome, CDS, gene, transcript, exon")
     parser.add_argument("-t", "--kmersize", dest = "kmer_size", default = "31", help="Size of kmers to be used in similarity comparison")
-    parser.add_argument("-d", "--dashing", dest = "dashing_flag", action="store_true", help = "Enable dashing for processing")
     parser.add_argument("-k", "--bottomkparam", dest = "bottom_k_param", default = "200", help="Sketch size for minHash")
     parser.add_argument("-c", "--clean", dest = "clean", action="store_true", help="Clean intermediate files")
     parser.add_argument("-fo", "--fna_output", dest = "fna_out_path", help="Folder used to output preprocessing")
     parser.add_argument("-o", "--output", dest = "out_path", help="Folder used for tree", required=True)
+    parser.add_argument("-d", "--dashing", dest = "dashing_flag", action="store_true", help = "Enable dashing for processing")
 
     try:
         args = parser.parse_args()
@@ -85,10 +85,6 @@ def main():
         subprocess.run(["rm", "-r", tree_input_path])
     print("tree building complete")
     return 0
-
-
-
-
 
 if __name__ == "__main__":
     main()
