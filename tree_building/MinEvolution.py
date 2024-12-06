@@ -1,132 +1,97 @@
 import pandas as pd
 import numpy as np
-from skbio import DistanceMatrix
-from dendropy import Tree as DendroPyTree
-from dendropy import TaxonNamespace
-import glob
-import matplotlib.pyplot as plt
-from io import StringIO
 from Bio import Phylo
+from Bio.Phylo.TreeConstruction import DistanceTreeConstructor, DistanceMatrix
+import glob
 import os
-import dendropy
-import io
-import subprocess
-import tempfile
+import matplotlib.pyplot as plt
 
-def read_similarity_csv(filePath):
-    similarityDf = pd.read_csv(filePath, index_col=0, na_values=['-'])
-    similarityDf = similarityDf.astype(float)
-    return similarityDf
-
-def similarity_to_distance(similarityDf):
-    similarityDf = similarityDf.clip(lower=0, upper=1)
-    epsilon = 1e-10
-    similarityDf += epsilon
-    distanceDf = -np.log(similarityDf)
-    np.fill_diagonal(distanceDf.values, 0)
+def readDistanceMatrix(filePath):
+    distanceDf = pd.read_csv(filePath, index_col=0, na_values=['-'])
+    distanceDf = distanceDf.astype(float)
     return distanceDf
 
-def run_minimal_evolution(distanceDf):
-    # Convert the distance matrix DataFrame into PHYLIP-like format for RapidNJ
+def temporarilyMaskMatrix(distanceDf):
+    originalDf = distanceDf.copy()
+    mask = np.triu(np.ones(distanceDf.shape), k=1).astype(bool)
+    distanceDf.where(~mask, other=0, inplace=True)
+    return distanceDf, originalDf
+
+def restoreMatrix(distanceDf, originalDf):
+    distanceDf[:] = originalDf[:]
+
+def constructMinEvolutionTree(distanceDf):
+    distanceDf, originalDf = temporarilyMaskMatrix(distanceDf)
+    print("Masked Distance Matrix (Lower Triangle Only):")
+    print(distanceDf)
     ids = distanceDf.index.tolist()
+    print("IDs (Taxon Names):", ids)
+    print("Number of taxa (matrix size):", len(ids))
     n = len(ids)
-    
-    # RapidNJ expects a PHYLIP-formatted distance file, where:
-    # First line: number of taxa
-    # Following lines: TaxonName Distances...
-    # 
-    # Example:
-    #  4
-    #  Taxon1 0.0  0.1  0.2  0.3
-    #  Taxon2 0.1  0.0  0.2  0.2
-    #  ...
-    
-    with tempfile.NamedTemporaryFile('w', delete=False) as dist_file:
-        dist_file_name = dist_file.name
-        dist_file.write(f"{n}\n")
-        for i, taxon in enumerate(ids):
-            dist_line = " ".join(f"{d:.6f}" for d in distanceDf.iloc[i])
-            dist_file.write(f"{taxon} {dist_line}\n")
+    matrix = []
+    for i in range(n):
+        row = []
+        for j in range(i):
+            row.append(distanceDf.iloc[i, j])
+        row.append(0)
+        matrix.append(row)
+    print("Matrix size (rows):", len(matrix))
+    print("First few rows of the matrix:")
+    for row in matrix[:9]:
+        print(row)
+    distanceMatrix = DistanceMatrix(names=ids, matrix=matrix)
+    constructor = DistanceTreeConstructor()
+    tree = constructor.upgma(distanceMatrix)
+    restoreMatrix(distanceDf, originalDf)
+    return tree
 
-    # Run RapidNJ with minimal evolution method
-    # -i pd : input is a phylip distance file
-    # -o t  : output is a tree in newick format
-    # -m ME : minimal evolution method
-    # 
-    # RapidNJ usage example:
-    # rapidnj input_dist_file -i pd -o t -m ME > output_tree.txt
-    
-    with tempfile.NamedTemporaryFile('w', delete=False) as tree_file:
-        tree_file_name = tree_file.name
-
-    cmd = ["rapidnj", dist_file_name, "-i", "pd", "-o", "t", "-m", "ME"]
-    with open(tree_file_name, 'w') as outfile:
-        subprocess.run(cmd, stdout=outfile, check=True)
-
-    # Read the resulting Newick tree
-    with open(tree_file_name, 'r') as f:
-        newickStr = f.read().strip()
-
-    # Cleanup temporary files
-    os.remove(dist_file_name)
-    os.remove(tree_file_name)
-    
-    # Convert to DendroPy tree
-    dendropyTree = DendroPyTree.get(data=newickStr, schema="newick", taxon_namespace=TaxonNamespace())
-    return dendropyTree
-
-def visualize_tree(dendropyTree, outputImagePath, treeLabel):
-    newickStr = dendropyTree.as_string(schema='newick')
-    handle = StringIO(newickStr)
-    phyloTree = Phylo.read(handle, 'newick')
+def visualizeTree(tree, outputImagePath, treeLabel):
     fig = plt.figure(figsize=(12, 8))
     axes = fig.add_subplot(1, 1, 1)
-    Phylo.draw(phyloTree, do_show=False, axes=axes)
-    plt.title(f"Phylogenetic Tree (ME): {treeLabel}", fontsize=16)
+    Phylo.draw(tree, do_show=False, axes=axes)
+    plt.title(f"Phylogenetic Tree: {treeLabel}", fontsize=16)
     plt.savefig(outputImagePath, format='png', dpi=300, bbox_inches='tight')
     plt.close(fig)
     print(f"Phylogenetic tree visualization saved to '{outputImagePath}'.")
 
-def save_trees_nexus(dendropyTrees, outputTreePath):
+def saveTreesNexus(trees, outputTreePath):
     with open(outputTreePath, 'w') as nexusFile:
         nexusFile.write("#NEXUS\n")
         nexusFile.write("BEGIN TREES;\n")
-        for idx, (tree, label) in enumerate(dendropyTrees, 1):
-            nexusFile.write(f"    TREE {label} = {tree.as_string(schema='newick').strip()}\n")
+        for idx, (tree, label) in enumerate(trees, 1):
+            nexusFile.write(f"    TREE {label} = {tree.format('newick').strip()}\n")
         nexusFile.write("END;\n")
     print(f"All phylogenetic trees saved to '{outputTreePath}' in Nexus format.")
 
-def process_single_csv(filePath, outputDir):
+def processSingleCsv(filePath, outputDir):
     baseName = os.path.basename(filePath)
     treeLabel = os.path.splitext(baseName)[0]
     print(f"\nProcessing file: '{filePath}' with label '{treeLabel}'.")
-    similarityDf = read_similarity_csv(filePath)
-    print(" - Loaded similarity matrix.")
-    distanceDf = similarity_to_distance(similarityDf)
-    print(" - Converted similarity matrix to distance matrix.")
-    dendropyTree = run_minimal_evolution(distanceDf)
-    print(" - Constructed Minimal Evolution tree using RapidNJ.")
-    outputImagePath = os.path.join(outputDir, f"{treeLabel}_ME_Phylogenetic_Tree.png")
-    visualize_tree(dendropyTree, outputImagePath, treeLabel)
-    return dendropyTree, treeLabel
+    distanceDf = readDistanceMatrix(filePath)
+    print(" - Loaded distance matrix.")
+    minEvoTree = constructMinEvolutionTree(distanceDf)
+    print(" - Constructed Minimum Evolution tree.")
+    outputImagePath = os.path.join(outputDir, f"{treeLabel}_Phylogenetic_Tree.png")
+    visualizeTree(minEvoTree, outputImagePath, treeLabel)
+    return minEvoTree, treeLabel
 
-def ME_pipeline(generalFolderPath):
+def minEvolution(generalFolderPath):
     inputDir = os.path.join(generalFolderPath, 'input')
-    outputDir = os.path.join(generalFolderPath, 'result', 'ME')
+    outputDir = os.path.join(generalFolderPath, 'result', 'MinE')
     os.makedirs(outputDir, exist_ok=True)
-    similarityCsvFiles = glob.glob(os.path.join(inputDir, '*.csv'))
-    if not similarityCsvFiles:
+    distanceCsvFiles = glob.glob(os.path.join(inputDir, '*.csv'))
+    if not distanceCsvFiles:
         print("No CSV files found in the specified directory. Please check the file paths.")
     else:
-        dendropyTrees = []
-        for filePath in similarityCsvFiles:
-            dendropyTree, treeLabel = process_single_csv(filePath, outputDir)
-            dendropyTrees.append((dendropyTree, treeLabel))
+        trees = []
+        for filePath in distanceCsvFiles:
+            tree, treeLabel = processSingleCsv(filePath, outputDir)
+            trees.append((tree, treeLabel))
             print(f"Completed processing for '{treeLabel}'.")
-        outputTreePath = os.path.join(outputDir, "All_Phylogenetic_Trees_ME.nex")
-        save_trees_nexus(dendropyTrees, outputTreePath)
-        print("\nAll phylogenetic tree generation and saving completed successfully (Minimal Evolution).")
+        outputTreePath = os.path.join(outputDir, "All_Phylogenetic_Trees.nex")
+        saveTreesNexus(trees, outputTreePath)
+        print("\nAll phylogenetic tree generation and saving completed successfully.")
 
 if __name__ == "__main__":
     generalFolderPath = '/users/harry/desktop/Computational_Genetics/Final_project/code/'
-    ME_pipeline(generalFolderPath)
+    minEvolution(generalFolderPath)

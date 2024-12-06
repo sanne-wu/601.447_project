@@ -12,20 +12,14 @@ import os
 import dendropy
 import io
 
-def read_similarity_csv(filePath):
-    similarityDf = pd.read_csv(filePath, index_col=0, na_values=['-'])
-    similarityDf = similarityDf.astype(float)
-    return similarityDf
-
-def similarity_to_distance(similarityDf):
-    similarityDf = similarityDf.clip(lower=0, upper=1)
-    epsilon = 1e-10
-    similarityDf += epsilon
-    distanceDf = -np.log(similarityDf)
-    np.fill_diagonal(distanceDf.values, 0)
+def read_distance_csv(filePath):
+    """Reads a CSV file containing the distance matrix."""
+    distanceDf = pd.read_csv(filePath, index_col=0, na_values=['-'])
+    distanceDf = distanceDf.astype(float)
     return distanceDf
 
 def construct_nj_tree(distanceDf):
+    """Constructs a Neighbor-Joining tree from a distance matrix."""
     ids = distanceDf.index.tolist()
     distanceArray = distanceDf.values
     dm = DistanceMatrix(distanceArray, ids)
@@ -33,6 +27,7 @@ def construct_nj_tree(distanceDf):
     return tree
 
 def skbio_to_dendropy_tree(skbioTree):
+    """Converts a skbio tree to a dendropy tree."""
     newickIo = io.StringIO()
     skbioTree.write(newickIo, format='newick')
     newickStr = newickIo.getvalue()
@@ -41,6 +36,7 @@ def skbio_to_dendropy_tree(skbioTree):
     return dendropyTree
 
 def visualize_tree(dendropyTree, outputImagePath, treeLabel):
+    """Visualizes the tree and saves it as an image."""
     newickStr = dendropyTree.as_string(schema='newick')
     handle = StringIO(newickStr)
     phyloTree = Phylo.read(handle, 'newick')
@@ -53,6 +49,7 @@ def visualize_tree(dendropyTree, outputImagePath, treeLabel):
     print(f"Phylogenetic tree visualization saved to '{outputImagePath}'.")
 
 def save_trees_nexus(dendropyTrees, outputTreePath):
+    """Saves all trees in Nexus format."""
     with open(outputTreePath, 'w') as nexusFile:
         nexusFile.write("#NEXUS\n")
         nexusFile.write("BEGIN TREES;\n")
@@ -62,13 +59,12 @@ def save_trees_nexus(dendropyTrees, outputTreePath):
     print(f"All phylogenetic trees saved to '{outputTreePath}' in Nexus format.")
 
 def process_single_csv(filePath, outputDir):
+    """Processes a single CSV file containing a distance matrix."""
     baseName = os.path.basename(filePath)
     treeLabel = os.path.splitext(baseName)[0]
     print(f"\nProcessing file: '{filePath}' with label '{treeLabel}'.")
-    similarityDf = read_similarity_csv(filePath)
-    print(" - Loaded similarity matrix.")
-    distanceDf = similarity_to_distance(similarityDf)
-    print(" - Converted similarity matrix to distance matrix.")
+    distanceDf = read_distance_csv(filePath)
+    print(" - Loaded distance matrix.")
     njTreeSkbio = construct_nj_tree(distanceDf)
     print(" - Constructed Neighbor-Joining tree using skbio.")
     dendropyTree = skbio_to_dendropy_tree(njTreeSkbio)
@@ -78,15 +74,16 @@ def process_single_csv(filePath, outputDir):
     return dendropyTree, treeLabel
 
 def NN(generalFolderPath):
+    """Main function to process all CSV files and generate trees."""
     inputDir = os.path.join(generalFolderPath, 'input')
     outputDir = os.path.join(generalFolderPath, 'result', 'NN')
     os.makedirs(outputDir, exist_ok=True)
-    similarityCsvFiles = glob.glob(os.path.join(inputDir, '*.csv'))
-    if not similarityCsvFiles:
+    distanceCsvFiles = glob.glob(os.path.join(inputDir, '*.csv'))
+    if not distanceCsvFiles:
         print("No CSV files found in the specified directory. Please check the file paths.")
     else:
         dendropyTrees = []
-        for filePath in similarityCsvFiles:
+        for filePath in distanceCsvFiles:
             dendropyTree, treeLabel = process_single_csv(filePath, outputDir)
             dendropyTrees.append((dendropyTree, treeLabel))
             print(f"Completed processing for '{treeLabel}'.")

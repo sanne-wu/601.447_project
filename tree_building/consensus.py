@@ -11,6 +11,7 @@ import glob
 from NN import NN
 from UMPGA import UMPGA
 import logging
+from MinEvolution import minEvolution
 
 def setupLogging(logFilePath):
     logging.basicConfig(
@@ -106,7 +107,8 @@ def buildConsensus(generalFolder):
     os.makedirs(consensusFolder, exist_ok=True)
     nnFolder = os.path.join(generalFolder, "result", "NN")
     umpgaFolder = os.path.join(generalFolder, "result", "UMPGA")
-    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(umpgaFolder, "*.nex"))
+    minFolder = os.path.join(generalFolder, "result", "MinE")
+    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(umpgaFolder, "*.nex")) +  glob.glob(os.path.join(minFolder, "*.nex"))
     categories = ['whole_genome', 'cds', 'gene']
     trees_by_category = {category: [] for category in categories}
     for filePath in treeFiles:
@@ -164,6 +166,7 @@ def main():
     logging.info(f"Starting phylogenetic analysis in folder: {generalFolder}")
     NN(generalFolder)
     UMPGA(generalFolder)
+    minEvolution(generalFolder)
     buildConsensus(generalFolder)
     logging.info("NN, UPGMA clustering, and consensus tree generation completed successfully.")
 
