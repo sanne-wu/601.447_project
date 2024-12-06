@@ -68,7 +68,7 @@ def main():
                 "minhash"
             ):
                 return 1
-            print(f"{minhash_output} complete.")
+            print(f"{minhash_output} complete")
         else:
             # make sure the alias was added to ~/.bashrc according to the README installation guideline
             # read more in the "Dependencies" section
