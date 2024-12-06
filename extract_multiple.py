@@ -57,8 +57,9 @@ def main():
   gtf_list_file = sys.argv[3]
   output_folder = sys.argv[4]
   
-  levels = ["genome", "CDS", "gene", "transcript", "exon"]
+  levels = ["genome", "CDS", "gene"]
   if feature not in levels:
+    print("error: unknown level")
     return 1
 
   if not os.path.exists(output_folder): #check if output folder exists

@@ -157,15 +157,15 @@ void make_similarity_matrix(const string& filename, size_t kmer_size, hash<strin
             }
         }
     }
-    out << "##NAMES";
+    out << "##Names";
     for (size_t i = 0; i < n; i++) {
-        out << "\t" << names[i];
+        out << "," << names[i];
     }
     out << endl;
     for (size_t i = 0; i < n; i++) {
         out << names[i];
         for (size_t j = 0; j < n; j++) {
-            out << "\t" << similarity_matrix[i][j];
+            out << "," << similarity_matrix[i][j];
         }
         out << endl;
     }

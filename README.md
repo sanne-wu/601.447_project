@@ -7,7 +7,7 @@ scipy, matplotlib, numpy, pandas, biopython, dendropy
 ### parameters
 **`-pg, --genomepaths`:** (required) Path to input file holding paths separated by line breaks to genome files of interest. \
 **`-pa, --annotationpaths`:** (required) Path to input file holding paths separated by line breaks to gene annotation files of interest. Must be in the same order as the genome paths. \
-**`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`, `transcript`, `exon`. If this is not specified, it will produce results for all five levels. \
+**`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`. If this is not specified, it will produce results for all five levels. \
 **`-t, --kmersize`:** (optional) The size of kmers to be used in the similarity comparison. Default is 31.\
 **`-k, --bottomkparam`:** (optional) Used only for minHash. Specifies the sketch size when computing the bottom-k sketch. Default is 200. \
 **`-c, --clean`:** (optional) Specifying the `-c` tag will clean intermediate files produced by the program. This includes the distance matrices produced by Dashing and minHash, along with the preprocessed .fna files.\
@@ -23,7 +23,7 @@ Beyond running the program as an entire pipeline, each part can also be ran sepa
 `python3 extract_multiple.py exon preprocessing_test/input_genome_paths.txt preprocessing_test/input_gtf_paths.txt preprocessing_test/output_exons`
 
 The processed files will be stored in the path `output_folder`. \
-The formatted file used by minHash is stored in `output_feature_paths` where `feature` is one of `genome`, `CDS`, `gene`, `transcript`, `exon` and corresponds to the `-l` parameter in the wrapper.
+The formatted file used by minHash is stored in `output_feature_paths` where `feature` is one of `genome`, `CDS`, `gene` and corresponds to the `-l` parameter in the wrapper.
 
 ### 2. minHash:
 #### usage:
