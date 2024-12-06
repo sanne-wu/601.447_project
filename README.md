@@ -1,10 +1,10 @@
 # Sketch2Phylo
-# needed packages:
+## needed packages:
 scipy, matplotlib, numpy, pandas, biopython, dendropy
 
-# example usage:
+## example usage:
 `python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt -pa preprocessing_test/input_gtf_paths.txt -o test -c`
-### parameters
+## parameters
 **`-pg, --genomepaths`:** (required) Path to input file holding paths separated by line breaks to genome files of interest. \
 **`-pa, --annotationpaths`:** (required) Path to input file holding paths separated by line breaks to gene annotation files of interest. Must be in the same order as the genome paths. \
 **`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`. If this is not specified, it will produce results for all five levels. \
@@ -36,3 +36,13 @@ Adding the `-d` flag will compute a distance matrix variation by calculating -lo
 If an output is not provided, it will print the results directly to console. \
 The `list_name` parameter is a formatted file where each contain contains the .fna file and its name separated by a white space. 
 `kmer_size` and `bottom-k parameter` correspond to the `-t` and `-k` parameters in the wrapper above. 
+
+### 3. consensus.py
+#### usage:
+`python3 consensus.py <tree_folder>` 
+#### example usage:
+`python3 consensus.py test` 
+
+The program produces trees from different methods such as NN, UMPGA, and MinE, then forms a Consensus between them.\
+Input is placed within `tree_folder/input/`, which is 3 similarity matrices at the different genome levels produced either by dashing or minHash. \
+ Results from each of these are output into the `tree_folder/result/` folder under their respective names.
