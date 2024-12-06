@@ -1,4 +1,4 @@
-# 601.447_project
+# Sketch2Phylo
 ### needed packages:
 scipy, matplotlib, numpy, pandas, biopython, dendropy
 
