@@ -1,8 +1,0 @@
-#NEXUS
-Begin Taxa;
- Dimensions NTax=9;
- TaxLabels 536_gene CFT073_gene APECO1_gene UTI89_gene S88_gene ED1a_gene E234869_gene IAI39_gene SMS35_gene;
-End;
-Begin Trees;
- Tree tree1=(((((536_gene:0.00000,CFT073_gene:0.00000):0.00000,((APECO1_gene:0.00000,UTI89_gene:0.00000):0.00000,S88_gene:0.00000):0.00000):0.00000,ED1a_gene:0.00000):0.00000,E234869_gene:0.00000):0.00000,(IAI39_gene:0.00000,SMS35_gene:0.00000):0.00000):0.00000;
-End;
