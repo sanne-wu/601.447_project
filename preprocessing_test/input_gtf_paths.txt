@@ -1,0 +1,9 @@
+536 preprocessing_test/Ecoli_input/536/genomic.gtf
+APECO1 preprocessing_test/Ecoli_input/APECO1/genomic.gtf
+CFT073 preprocessing_test/Ecoli_input/CFT073/genomic.gtf
+ED1a preprocessing_test/Ecoli_input/ED1a/genomic.gtf
+IAI39 preprocessing_test/Ecoli_input/IAI39/genomic.gtf
+S88 preprocessing_test/Ecoli_input/S88/genomic.gtf
+SMS35 preprocessing_test/Ecoli_input/SMS35/genomic.gtf
+UTI89 preprocessing_test/Ecoli_input/UTI89/genomic.gtf
+E234869 preprocessing_test/Ecoli_input/E234869/genomic.gtf

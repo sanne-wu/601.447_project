@@ -16,9 +16,10 @@ def main():
     
     # inputs to preprocessing
     preprocessing_output = "preprocessed_out.txt"
+    #call preprocessing with subprocess command line
     subprocess.run(["python3", "extract_multiple.py", level_flag, paths_to_genome, paths_to_annotations, preprocessing_output])
-
-    # call preprocessing with subprocess command line
+    print("Finished preprocessing")
+   
     ###
 
 

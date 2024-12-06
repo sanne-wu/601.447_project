@@ -1,0 +1,9 @@
+536 preprocessing_test/Ecoli_input/536/GCF_041262745.1_ASM4126274v1_genomic.fna
+APECO1 preprocessing_test/Ecoli_input/APECO1/GCF_001021615.1_APECO18_genomic.fna
+CFT073 preprocessing_test/Ecoli_input/CFT073/GCF_021559855.1_ASM2155985v1_genomic.fna
+ED1a preprocessing_test/Ecoli_input/ED1a/GCF_000026305.1_ASM2630v1_genomic.fna
+IAI39 preprocessing_test/Ecoli_input/IAI39/GCF_000026345.1_ASM2634v1_genomic.fna
+S88 preprocessing_test/Ecoli_input/S88/GCF_000026285.1_ASM2628v2_genomic.fna
+SMS35 preprocessing_test/Ecoli_input/SMS35/GCF_000019645.1_ASM1964v1_genomic.fna
+UTI89 preprocessing_test/Ecoli_input/UTI89/GCF_000013265.1_ASM1326v1_genomic.fna
+E234869 preprocessing_test/Ecoli_input/E234869/GCF_014117345.2_ASM1411734v2_genomic.fna

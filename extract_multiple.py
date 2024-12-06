@@ -1,5 +1,6 @@
 import sys
 import os
+import shutil
 
 def parse_gtf(gtf_file, feature):
   features = []
@@ -24,7 +25,7 @@ def load_genome(fna_file, prokaryotes):
     for line in f:
       if line.startswith(">"):
         if chr_num:
-            genome[chr_num] = "".join(seq)
+          genome[chr_num] = "".join(seq)
         chr_num = line.split()[0][1:].split(" ")[0] if prokaryotes else line.split()[0][1:].split("_")[0]
         seq = []
       else:
@@ -48,8 +49,8 @@ def extract_and_write_features(genome, features, output_file):
 
 def main():
   if len(sys.argv) != 5:
-      print("Usage: python3 extract_multiple.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
-      sys.exit(1)
+    print("Usage: python3 extract_multiple.py feature <genome_list.txt> <gtf_list.txt> <output_paths.txt>")
+    sys.exit(1)
 
   feature = sys.argv[1]
   genome_list_file = sys.argv[2]
@@ -65,7 +66,7 @@ def main():
         print(f"Skipping empty line: genome='{genome_line}', gtf='{gtf_line}'")
         continue
 
-      #parse genome_name and paths
+      #parsing input
       genome_name, genome_path = genome_line.split(" ", 1)
       gtf_name, gtf_path = gtf_line.split(" ", 1)
 
@@ -75,13 +76,16 @@ def main():
 
       output_file = f"{genome_name}_{feature}_sequences.fna"
 
-      #process the genome and GTF file
-      features = parse_gtf(gtf_path, feature)
-      genome = load_genome(genome_path, True)
-      extract_and_write_features(genome, features, output_file)
+      if feature == "genome": #handle genome where extraction is not needed
+        shutil.copy(genome_path, output_file)
+      else:
+        #process genome and GTF file
+        features = parse_gtf(gtf_path, feature)
+        genome = load_genome(genome_path, True)
+        extract_and_write_features(genome, features, output_file)
 
-      #write output path with species name and feature to <output_paths.txt>
+      #write output file path with species name and feature to <output_paths.txt>
       out_paths.write(f"{os.path.abspath(output_file)} {genome_name}_{feature}\n")
 
 if __name__ == "__main__":
-    main()
+  main()
