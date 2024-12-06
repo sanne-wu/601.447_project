@@ -49,7 +49,7 @@ def extract_and_write_features(genome, features, output_file):
 
 def main():
   if len(sys.argv) != 5:
-    print("Usage: python3 extract_line_by_line_with_names.py feature <genome_list.txt> <gtf_list.txt> <output_folder>")
+    print("Usage: python3 extract_multiple.py <feature> <genome_list> <gtf_list> <output_folder>")
     sys.exit(1)
 
   feature = sys.argv[1]
