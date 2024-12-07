@@ -93,6 +93,7 @@ To reproduce the consensus tree results, please run:
 python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt pa preprocessing_test/input_gtf_paths.txt -o test -c
 ```
 This will produce the Consensus trees in `test/result/Consensus` in .nwk format, along with .png files of the trees, which is triplet of trees shown in the write-up. \
+At the same time, the tree built by nearest neigbor, UPGMA(Unweighted Pair Group Method with Arithmetic Mean), average linkage heirachical cluster, and complete linkage heirachical cluster will be saved to result as well.
 The reference tree is stored in `reference_tree.nwk`. \
 In order to get the RF distance between the Consensus trees and the reference, we utilized Visual TreeCmp (https://eti.pg.edu.pl/TreeCmp/WEB). \
 Selecting the "Ref-to-all comparison" we pasted the contents of the .nwk files for the consensus trees for cds, gene, and genome against the contents of `reference_tree.nwk` for comparison. This produces the RF distance table in the write-up.
