@@ -1,1 +1,1 @@
-(((((536_gene,CFT073_gene),((APECO1_gene,UTI89_gene),S88_gene)),ED1a_gene),E234869_gene),(((IAI39_gene,SMS35_gene),UMN026_gene),(((EDL933_gene,Sakai_gene),CB9615_gene),(((IAI1_gene,SE11_gene),E24377A_gene),((((MG1655_gene,W3110_gene),BW2952_gene),DH10B_gene),HS_gene)))));
+((((IAI39,SMS35),UMN026),((((IAI1,SE11),E24377A),((((MG1655,W3110),BW2952),DH10B),HS)),((EDL933,Sakai),CB9615))),((((536,CFT073),((APECO1,UTI89),S88)),ED1a),E234869));

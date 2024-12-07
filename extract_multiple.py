@@ -95,7 +95,7 @@ def main():
         extract_and_write_features(genome, features, output_file)
 
       #output path file format: path + species_feature
-      out_paths.write(f"{os.path.abspath(output_file)} {genome_name}_{feature}\n")
+      out_paths.write(f"{os.path.abspath(output_file)} {genome_name}\n")
 
 if __name__ == "__main__":
   main()
