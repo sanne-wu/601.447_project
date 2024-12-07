@@ -49,7 +49,7 @@ def upgmaTree(distanceMatrix, labels, title, ax):
     tree = linkageToPhylo(linkageMatrix, labels)
     return tree
 
-def UMPGA(generalFolder):
+def UPGMA(generalFolder):
     inputFolder = os.path.join(generalFolder, "input")
     resultFolder = os.path.join(generalFolder, "result", "UMPGA")
     os.makedirs(resultFolder, exist_ok=True)
@@ -90,4 +90,4 @@ def UMPGA(generalFolder):
 
 if __name__ == "__main__":
     generalFolderInput = '/users/harry/desktop/Computational_Genetics/Final_project/code/'
-    UMPGA(generalFolderInput)
+    UPGMA(generalFolderInput)

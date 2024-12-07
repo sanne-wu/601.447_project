@@ -9,10 +9,8 @@ from Bio.Phylo.Newick import Tree, Clade
 from collections import Counter
 import glob
 from NN import NN
-from UMPGA import UMPGA
+from tree_building.UPGMA import UPGMA
 import logging
-from MinEvolution import minEvolution
-from FM import FM 
 from HRA import HRA
 from HRC import HRC
 
@@ -109,13 +107,11 @@ def buildConsensus(generalFolder):
     consensusFolder = os.path.join(generalFolder, "result", "Consensus")
     os.makedirs(consensusFolder, exist_ok=True)
     nnFolder = os.path.join(generalFolder, "result", "NN")
-    umpgaFolder = os.path.join(generalFolder, "result", "UMPGA")
-    minFolder = os.path.join(generalFolder, "result", "MinE")
-    fmFolder = os.path.join(generalFolder, "result", "FM")
+    upgmaFolder = os.path.join(generalFolder, "result", "UMPGA")
     hrcFolder = os.path.join(generalFolder, "result", "HRC")
     hraFolder = os.path.join(generalFolder, "result", "HRA")
-    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(umpgaFolder, "*.nex")) +  glob.glob(os.path.join(minFolder, "*.nex")) + glob.glob(os.path.join(fmFolder, "*.nex")) + glob.glob(os.path.join(hrcFolder, "*.nex")) + glob.glob(os.path.join(hraFolder, "*.nex"))
-    categories = ['cds', 'gene','whole_genome']
+    treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(upgmaFolder, "*.nex")) + glob.glob(os.path.join(hrcFolder, "*.nex")) + glob.glob(os.path.join(hraFolder, "*.nex"))
+    categories = ['cds', 'whole_genome','gene']
     trees_by_category = {category: [] for category in categories}
     for filePath in treeFiles:
         if not os.path.exists(filePath):
