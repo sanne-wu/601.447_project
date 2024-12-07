@@ -1,6 +1,7 @@
 import subprocess
 import os
 import argparse
+import glob
 
 def clean_after_error(out_path):
     subprocess.run(["rm", "-r", out_path])
@@ -74,19 +75,16 @@ def main():
             # read more in the "Dependencies" section
             dashing_output = f'dashing_out_{l}.tsv'
             dashing_output_path = os.path.join(tree_input_path, dashing_output)
-            level_to_suffix = {
-                "genome": "full_genome", 
-                "CDS": "cds", 
-                "gene": "gene"
-            }
             dashing_cmd = [
                 './dashing', 'dist',
-                '-M', # compute Mash distance
-                '-k', args.kmer_size, # kmer size for E.coli, see Bonnie et al. 2024 for more details
-                '-p', '40', # threads, assume running on salz servers
+                '-M',  # compute Mash distance
+                '-k', args.kmer_size,
+                '-p', '40',
                 '-O', dashing_output_path,
-                f'*_{level_to_suffix[l]}.fna'
             ]
+            # Add all matching files to the command
+            dashing_cmd.extend(glob.glob(os.path.join(fna_out_path, f'*_{l}_sequences.fna')))
+            
             if run_program(dashing_cmd, args.out_path, "dashing"):
                 return 1
             print(f"{dashing_output} complete")
