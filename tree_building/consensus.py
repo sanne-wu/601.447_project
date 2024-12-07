@@ -116,7 +116,7 @@ def buildConsensus(generalFolder):
     hrcFolder = os.path.join(generalFolder, "result", "HRC")
     hraFolder = os.path.join(generalFolder, "result", "HRA")
     treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(upgmaFolder, "*.nex")) + glob.glob(os.path.join(hrcFolder, "*.nex")) + glob.glob(os.path.join(hraFolder, "*.nex"))
-    categories = ['genome', 'gene','cds']
+    categories = ['cds', 'gene','genome',]
     trees_by_category = {category: [] for category in categories}
     for filePath in treeFiles:
         if not os.path.exists(filePath):

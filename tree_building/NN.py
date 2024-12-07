@@ -78,7 +78,7 @@ def NN(generalFolderPath):
     inputDir = os.path.join(generalFolderPath, 'input')
     outputDir = os.path.join(generalFolderPath, 'result', 'NN')
     os.makedirs(outputDir, exist_ok=True)
-    distanceCsvFiles = glob.glob(os.path.join(inputDir, '*.csv'))
+    distanceCsvFiles = sorted(glob.glob(os.path.join(inputDir, '*.csv')))
     if not distanceCsvFiles:
         print("No CSV files found in the specified directory. Please check the file paths.")
     else:

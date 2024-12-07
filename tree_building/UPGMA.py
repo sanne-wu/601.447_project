@@ -53,7 +53,7 @@ def UPGMA(generalFolder):
     inputFolder = os.path.join(generalFolder, "input")
     resultFolder = os.path.join(generalFolder, "result", "UMPGA")
     os.makedirs(resultFolder, exist_ok=True)
-    inputFilePaths = glob.glob(os.path.join(inputFolder, "*.csv"))
+    inputFilePaths = sorted(glob.glob(os.path.join(inputFolder, "*.csv")))
     trees = []
     allPhyloTrees = []
     numFiles = len(inputFilePaths)
