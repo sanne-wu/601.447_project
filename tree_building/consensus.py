@@ -9,7 +9,7 @@ from Bio.Phylo.Newick import Tree, Clade
 from collections import Counter
 import glob
 from NN import NN
-from tree_building.UPGMA import UPGMA
+from UPGMA import UPGMA
 import logging
 from HRA import HRA
 from HRC import HRC
@@ -167,9 +167,7 @@ def main():
         return
     logging.info(f"Starting phylogenetic analysis in folder: {generalFolder}")
     NN(generalFolder)
-    UMPGA(generalFolder)
-    minEvolution(generalFolder)
-    FM(generalFolder)
+    UPGMA(generalFolder)
     HRC(generalFolder)
     HRA(generalFolder)
     buildConsensus(generalFolder)
