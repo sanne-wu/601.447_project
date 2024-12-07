@@ -3,14 +3,21 @@ import numpy as np
 import sys
 
 # Load the CSV file
+def clean_label(label):
+    # Extract just the base name between last / and first _
+    import re
+    match = re.search(r'/fna_temp/([^_]+)_', label)
+    if match:
+        return match.group(1)
+    return label
 
 def main(fn_in, fn_out):
     # Read TSV file with tab separator explicitly specified
     df = pd.read_csv(fn_in, index_col=0, sep='\t')
     
     # Clean up index and column names by taking just the filename part
-    df.index = df.index.map(lambda x: x.split('\t')[0])
-    df.columns = df.columns.map(lambda x: x.split('\t')[0])
+    df.index = df.index.map(clean_label)
+    df.columns = df.columns.map(clean_label)
     
     matrix = df.to_numpy()
 
