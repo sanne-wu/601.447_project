@@ -79,3 +79,13 @@ python3 consensus.py test
 The program produces trees from different methods such as NN, UMPGA, and MinE, then forms a Consensus between them.\
 Input is placed within `tree_folder/input/`, which is 3 similarity matrices at the different genome levels produced either by dashing or minHash. \
 Results from each of these are output into the `tree_folder/result/` folder under their respective names.
+
+## Reproducing results
+To reproduce the consensus tree results, please run:
+```bash
+python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt pa preprocessing_test/input_gtf_paths.txt -o test -c
+```
+This will produce the Consensus trees in `test/result/Consensus` in .nwk format, along with .png files of the trees, which is triplet of trees shown in the write-up. \
+The reference tree is stored in `reference_tree.nwk`. \
+In order to get the RF distance between the Consensus trees and the reference, we utilized Visual TreeCmp (https://eti.pg.edu.pl/TreeCmp/WEB). \
+Selecting the "Ref-to-all comparison" we pasted the contents of the .nwk files for the consensus trees for cds, gene, and genome against the contents of `reference_tree.nwk` for comparison. This produces the RF distance table in the write-up.
