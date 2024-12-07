@@ -82,7 +82,7 @@ def main():
             dashing_cmd = [
                 './dashing', 'dist',
                 '-M', # compute Mash distance
-                '-k', '15', # kmer size for E.coli, see Bonnie et al. 2024 for more details
+                '-k', args.kmer_size, # kmer size for E.coli, see Bonnie et al. 2024 for more details
                 '-p', '40', # threads, assume running on salz servers
                 '-O', dashing_output_path,
                 f'*_{level_to_suffix[l]}.fna'

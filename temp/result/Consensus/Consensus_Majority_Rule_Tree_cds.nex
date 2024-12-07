@@ -1,8 +1,0 @@
-#NEXUS
-Begin Taxa;
- Dimensions NTax=9;
- TaxLabels IAI39.fna SMS35.fna 536.fna CFT073.fna APEC01.fna S88.fna UTI89.fna ED1a.fna E234869.fna;
-End;
-Begin Trees;
- Tree tree1=((IAI39.fna:0.00000,SMS35.fna:0.00000):0.00000,((((536.fna:0.00000,CFT073.fna:0.00000):0.00000,((APEC01.fna:0.00000,S88.fna:0.00000):0.00000,UTI89.fna:0.00000):0.00000):0.00000,ED1a.fna:0.00000):0.00000,E234869.fna:0.00000):0.00000):0.00000;
-End;
