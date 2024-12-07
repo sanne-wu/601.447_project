@@ -28,11 +28,17 @@ The following Python packages are required:
 **`-d, --dashing`:** (optional) Specifying the `-d` flag will produce the distance matrix with dashing instead of minHash.
 
 ## Running Sketch2Phylo
-### Simple use case:
+### Simple use case (minHash)
 ```bash
 python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt 
                    -pa preprocessing_test/input_gtf_paths.txt 
                    -o test -c
+```
+### Simple use case (Dashing)
+```bash
+python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt
+                   -pa preprocessing_test/input_gtf_paths.txt 
+                   -o test_dashing -c -t 14 -d
 ```
 In addition to running the program as an end-to-end pipeline, each part can also be ran separately for more control over the process.
 ### 1. preprocessing
