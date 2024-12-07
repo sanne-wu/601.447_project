@@ -11,9 +11,8 @@ def run_program(command_line, out_path, label, ex = False):
     if not ex:
         if result.stdout:
             print(result.stdout)
-        if result.stderr or result.returncode != 0:
-            print(f"error in {label}")
-            print(result.stderr)
+        if result.stderr and not result.stderr.startswith("Dashing version") or result.returncode != 0:
+            print(f"Error in {label}: {result.stderr}")
             clean_after_error(out_path)
             return 1
     return 0
@@ -33,7 +32,7 @@ def main():
     try:
         args = parser.parse_args()
     except:
-        print("error: missing required arguments")
+        print("Error: missing required arguments")
         return 1
 
     # Create output directories
@@ -76,7 +75,7 @@ def main():
             dashing_output = f'dashing_out_{l}.tsv'
             dashing_output_path = os.path.join(tree_input_path, dashing_output)
             dashing_cmd = [
-                './dashing', 'dist',
+                os.path.expanduser('~/dashing/dashing'), 'dist',
                 '-M',  # compute Mash distance
                 '-k', args.kmer_size,
                 '-p', '40',
