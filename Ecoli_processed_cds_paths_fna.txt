@@ -1,9 +1,0 @@
-Ecoli_processed/fna/536_cds.fna
-Ecoli_processed/fna/APECO1_cds.fna
-Ecoli_processed/fna/CFT073_cds.fna
-Ecoli_processed/fna/E234869_cds.fna
-Ecoli_processed/fna/ED1a_cds.fna
-Ecoli_processed/fna/IAI39_cds.fna
-Ecoli_processed/fna/S88_cds.fna
-Ecoli_processed/fna/SMS35_cds.fna
-Ecoli_processed/fna/UTI89_cds.fna

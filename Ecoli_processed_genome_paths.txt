@@ -1,9 +1,0 @@
-Ecoli_processed/txt/536_full_genome.txt 536
-Ecoli_processed/txt/APECO1_full_genome.txt APECO1
-Ecoli_processed/txt/CFT073_full_genome.txt CFT073
-Ecoli_processed/txt/E234869_full_genome.txt E234869
-Ecoli_processed/txt/ED1a_full_genome.txt ED1a
-Ecoli_processed/txt/IAI39_full_genome.txt IAI39
-Ecoli_processed/txt/S88_full_genome.txt S88
-Ecoli_processed/txt/SMS35_full_genome.txt SMS35
-Ecoli_processed/txt/UTI89_full_genome.txt UTI89

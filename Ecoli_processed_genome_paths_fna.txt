@@ -1,9 +1,0 @@
-Ecoli_processed/fna/536_full_genome.fna
-Ecoli_processed/fna/APECO1_full_genome.fna
-Ecoli_processed/fna/CFT073_full_genome.fna
-Ecoli_processed/fna/E234869_full_genome.fna
-Ecoli_processed/fna/ED1a_full_genome.fna
-Ecoli_processed/fna/IAI39_full_genome.fna
-Ecoli_processed/fna/S88_full_genome.fna
-Ecoli_processed/fna/SMS35_full_genome.fna
-Ecoli_processed/fna/UTI89_full_genome.fna
