@@ -9,6 +9,7 @@ The following Python packages are required:
 * pandas
 * biopython
 * dendropy
+* scikit-bio
 * dashing (required for -d flag)
   ```bash
   git clone --recursive https://github.com/dnbaker/dashing
