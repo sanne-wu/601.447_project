@@ -1,0 +1,17 @@
+2024-12-06 19:34:35,212 [INFO] Starting phylogenetic analysis in folder: test
+2024-12-06 19:34:41,512 [INFO] Processing consensus for category: genome
+2024-12-06 19:34:41,514 [INFO] Number of majority splits for genome: 19
+2024-12-06 19:34:41,775 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_genome.nex
+2024-12-06 19:34:41,776 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_genome.nwk
+2024-12-06 19:34:41,776 [INFO] Consensus tree plot saved at: test/result/Consensus/Majority_Rule_Consensus_Tree_genome.png
+2024-12-06 19:34:41,776 [INFO] Processing consensus for category: gene
+2024-12-06 19:34:41,777 [INFO] Number of majority splits for gene: 20
+2024-12-06 19:34:42,006 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_gene.nex
+2024-12-06 19:34:42,006 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_gene.nwk
+2024-12-06 19:34:42,006 [INFO] Consensus tree plot saved at: test/result/Consensus/Majority_Rule_Consensus_Tree_gene.png
+2024-12-06 19:34:42,006 [INFO] Processing consensus for category: cds
+2024-12-06 19:34:42,007 [INFO] Number of majority splits for cds: 20
+2024-12-06 19:34:42,234 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_cds.nex
+2024-12-06 19:34:42,234 [INFO] Consensus tree saved to test/result/Consensus/Consensus_Majority_Rule_Tree_cds.nwk
+2024-12-06 19:34:42,234 [INFO] Consensus tree plot saved at: test/result/Consensus/Majority_Rule_Consensus_Tree_cds.png
+2024-12-06 19:34:42,234 [INFO] NN, UPGMA clustering, and consensus tree generation completed successfully.

@@ -13,6 +13,11 @@ from UPGMA import UPGMA
 import logging
 from HRA import HRA
 from HRC import HRC
+import re
+
+def convert_to_unweighted_newick(weighted_newick):
+    unweighted_newick = re.sub(r':\d+(\.\d+)?', '', weighted_newick)
+    return unweighted_newick
 
 def setupLogging(logFilePath):
     logging.basicConfig(
@@ -111,7 +116,7 @@ def buildConsensus(generalFolder):
     hrcFolder = os.path.join(generalFolder, "result", "HRC")
     hraFolder = os.path.join(generalFolder, "result", "HRA")
     treeFiles = glob.glob(os.path.join(nnFolder, "*.nex")) + glob.glob(os.path.join(upgmaFolder, "*.nex")) + glob.glob(os.path.join(hrcFolder, "*.nex")) + glob.glob(os.path.join(hraFolder, "*.nex"))
-    categories = ['cds', 'whole_genome','gene']
+    categories = ['genome', 'gene','cds']
     trees_by_category = {category: [] for category in categories}
     for filePath in treeFiles:
         if not os.path.exists(filePath):
@@ -142,6 +147,15 @@ def buildConsensus(generalFolder):
             outputFileNwk = os.path.join(consensusFolder, f"Consensus_Majority_Rule_Tree_{category}.nwk")
             Phylo.write(consensusTree, outputFileNex, 'nexus')
             Phylo.write(consensusTree, outputFileNwk, 'newick')
+
+            print(outputFileNwk)
+            with open(outputFileNwk, 'r+') as file:
+                weighted_newick_tree = file.read()
+                unweighted_newick_tree = convert_to_unweighted_newick(weighted_newick_tree)
+                file.seek(0)
+                file.truncate(0)
+                file.write(unweighted_newick_tree)
+
             plt.figure(figsize=(10, 8))
             Phylo.draw(consensusTree, do_show=False)
             plt.title(f'Majority-Rule Consensus Tree - {category}')
