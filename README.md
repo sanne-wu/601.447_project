@@ -20,7 +20,7 @@ The following Python packages are required:
 ## Parameters
 **`-pg, --genomepaths`:** (required) Path to input file holding paths separated by line breaks to genome files of interest. \
 **`-pa, --annotationpaths`:** (required) Path to input file holding paths separated by line breaks to gene annotation files of interest. Must be in the same order as the genome paths. \
-**`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`. If this is not specified, it will produce results for all five levels. \
+**`-l, --level`:** (optional) The level of specifity to preprocess the genome files at. Possible options are `genome`, `CDS`, `gene`. If this is not specified, it will produce results for all three levels. \
 **`-t, --kmersize`:** (optional) The size of kmers to be used in the similarity comparison. Default is 31.\
 **`-k, --bottomkparam`:** (optional) Used only for minHash. Specifies the sketch size when computing the bottom-k sketch. Default is 200. \
 **`-c, --clean`:** (optional) Specifying the `-c` flag will clean intermediate files produced by the program. This includes the distance matrices produced by Dashing and minHash, along with the preprocessed .fna files.\
