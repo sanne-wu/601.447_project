@@ -90,7 +90,7 @@ Results from each of these are output into the `tree_folder/result/` folder unde
 ## Reproducing results
 To reproduce the consensus tree results, please run:
 ```bash
-python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt pa preprocessing_test/input_gtf_paths.txt -o test -c -t 14
+python3 wrapper.py -pg preprocessing_test/input_genome_paths.txt -pa preprocessing_test/input_gtf_paths.txt -o test -c -t 14
 ```
 This will produce the Consensus trees in `test/result/Consensus` in .nwk format, along with .png files of the trees, which is triplet of trees shown in the write-up. \
 At the same time, the tree built by nearest neigbor, UPGMA(Unweighted Pair Group Method with Arithmetic Mean), average linkage heirachical cluster, and complete linkage heirachical cluster will be saved to result as well.
